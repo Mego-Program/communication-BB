@@ -9,6 +9,7 @@ function UserProfile() {
         src="/path/to/your/image.jpg"
         sx={{ width: 56, height: 56 }}
       />
+      <button>Send</button>
     </div>
   );
 }

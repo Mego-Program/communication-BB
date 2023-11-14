@@ -1,13 +1,35 @@
 import { useState } from "react";
-import UserProfile from "./componets/Avatar/UserProfile";
+import React from 'react';
+import SendMessageButton from "./componets/SendMessageButton";
+import ImageProfile from "./componets/ImageProfile";
+import InviteToBoard from "./componets/InviteToBoard";
+import UserBoardsList from "./componets/UsersBoards";
 
-function App() {
+const App = () => {
+  const handleSendMessage = () => {
+    
+    console.log('Sending message...');
+  };
+
+  const handleInviteClick = () => {
+    
+    console.log('Inviting to board...');
+  };
+
+  const userBoards = [
+    { id: 1, name: 'Board 1' },
+    { id: 2, name: 'Board 2' },
+    
+  ];
 
   return (
-    <>
-      <UserProfile />
-    </>
+    <div>
+      <SendMessageButton onClick={handleSendMessage} />
+      <ImageProfile imageUrl="url-to-image" alt="User Profile" />
+      <InviteToBoard onInviteClick={handleInviteClick} />
+      <UserBoardsList boards={userBoards} />
+    </div>
   );
-}
+};
 
 export default App;
