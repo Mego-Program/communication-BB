@@ -26,8 +26,6 @@ const App = () => {
     <div>
       <SendMessageButton onClick={handleSendMessage} />
       <ImageProfile imageUrl="url-to-image" alt="User Profile" />
-      <InviteToBoard onInviteClick={handleInviteClick} />
-      <UserBoardsList boards={userBoards} />
     </div>
   );
 };
