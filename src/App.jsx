@@ -2,8 +2,7 @@ import { useState } from "react";
 import React from 'react';
 import SendMessageButton from "./componets/SendMessageButton";
 import ImageProfile from "./componets/ImageProfile";
-import InviteToBoard from "./componets/InviteToBoard";
-import UserBoardsList from "./componets/UsersBoards";
+
 
 const App = () => {
   const handleSendMessage = () => {
