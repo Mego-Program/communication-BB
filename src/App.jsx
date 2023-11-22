@@ -1,35 +1,37 @@
-import { useState } from "react";
 import React from 'react';
-import SendMessageButton from "./componets/SendMessageButton";
-import ImageProfile from "./componets/ImageProfile";
-import InviteToBoard from "./componets/InviteToBoard";
-import UserBoardsList from "./componets/UsersBoards";
+import ChatList from './componets/ChatList';
+import Grid from '@mui/material/Grid';
+import ListUsers from './componets/listOfConections';
 
-const App = () => {
-  const handleSendMessage = () => {
+function App() {
+  const chats = [
+    { id: 1, name: 'danielsamuel', avatar: '/avatars/john.jpg', lastMessage: 'Hello there!' ,state: false},
+    { id: 2, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 3, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 4, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 5, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 6, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 7, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 8, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 9, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 10, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 11, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 12, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 13, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 14, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 15, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+    { id: 16, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
     
-    console.log('Sending message...');
-  };
-
-  const handleInviteClick = () => {
-    
-    console.log('Inviting to board...');
-  };
-
-  const userBoards = [
-    { id: 1, name: 'Board 1' },
-    { id: 2, name: 'Board 2' },
-    
+    // Add more chat items as needed
   ];
 
   return (
-    <div>
-      <SendMessageButton onClick={handleSendMessage} />
-      <ImageProfile imageUrl="url-to-image" alt="User Profile" />
-      <InviteToBoard onInviteClick={handleInviteClick} />
-      <UserBoardsList boards={userBoards} />
+    <div >
+      
+        <ChatList chats={chats} />
+      
     </div>
   );
-};
+}
 
 export default App;
