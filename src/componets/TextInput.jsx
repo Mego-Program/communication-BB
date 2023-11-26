@@ -20,7 +20,12 @@ import {
   
 export default function TextInput(props){
     return(
-      
+      <Grid
+        container
+        height={"85vh"}
+        justifyContent="flex-start"
+        alignItems="flex-end"
+      >
 <TextField
           
           label="Type your message here and it will be saved up this page"
@@ -33,4 +38,4 @@ export default function TextInput(props){
           style={{ width: "1400px", backgroundColor: "white" }}
           sx={{ position: "fixed", bottom: 0, left: 232, right: 0 }}
           elevation={3}
-        />)}
+        /></Grid>)}
