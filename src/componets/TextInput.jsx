@@ -13,15 +13,24 @@ import {
     Stack,
   } from "@mui/material";
   import SendIcon from "@mui/icons-material/Send"
+
+
+
+
+  
 export default function TextInput(props){
     return(
+      
 <TextField
           
           label="Type your message here and it will be saved up this page"
-          variant="outlined"
+          variant="filled"
+          multiline
+          maxLength={"1"}
+          maxRows={4}
           value={props.newMessage}
           onChange={props.handleChange}
-          style={{borderRadius: '10px', width: "1458px", backgroundColor: "white" }}
-          sx={{ position: "fixed", bottom: 40, left: 210, right: 0 }}
+          style={{ width: "1400px", backgroundColor: "white" }}
+          sx={{ position: "fixed", bottom: 0, left: 232, right: 0 }}
           elevation={3}
         />)}
