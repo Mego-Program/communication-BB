@@ -13,9 +13,7 @@ import {
   TextField,
   Button,
   Grid,
-  Grow,
-  colors,
-  Stack,
+  
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send"; // Import the Send icon
 
@@ -68,26 +66,16 @@ function ChatList(props) {
       <ListConnections chats={props.chats} />
 
       {/* Container for the text input */}
-      <Grid
-        container
-        height={"85vh"}
-        justifyContent="flex-start"
-        alignItems="flex-end"
-      >
+      
         {/* Text input component for entering new messages */}
         <TextInput newMessage={newMessage} handleChange={handleChange} />
-      </Grid>
+      
 
       {/* Container for the send button */}
-      <Grid
-        container
-        height={"5vh"}
-        justifyContent={"center"}
-        alignItems="flex-end"
-      >
+    
         {/* Send button component with the SendIcon */}
         <ButtonSend handleSend={handleSend} />
-      </Grid>
+     
     </div>
   );
 }

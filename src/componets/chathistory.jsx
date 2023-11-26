@@ -29,7 +29,7 @@ function ChatEntries({ chatHistory }) {
                   borderRadius: "20px",
                   color: "rgba(246, 201, 39, 1)",
                   display: "flex",
-                  marginLeft: "230px",
+                  marginLeft: "250px",
                   marginBottom: "10px", // Adjusted margin between chat entries
                 }}
               >
