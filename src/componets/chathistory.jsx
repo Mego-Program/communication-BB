@@ -24,7 +24,7 @@ function ChatEntries({ chatHistory }) {
             <Grow key={index} in={true} timeout={1200}>
               <div
                 style={{
-                  width: "73%",
+                  width:  'fit-content'  ,
                   border: "1px solid ",
                   borderRadius: "20px",
                   color: "rgba(246, 201, 39, 1)",
@@ -55,7 +55,7 @@ function ChatEntries({ chatHistory }) {
                       </p>
                     </React.Fragment>
                   ))}
-                  <p style={{ marginLeft: '600px' }}>{time}</p>
+                  <p style={{justifyContent:"flex-end" }}>{time}</p>
                 </div>
               </div>
             </Grow>

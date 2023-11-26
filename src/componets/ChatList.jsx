@@ -60,11 +60,12 @@ function ChatList(props) {
   return (
     <div className="ChatContainer">
       {/* Container for chat entries with flex layout */}
+      <div>
       <ChatEntries chatHistory={chatHistory} />
 
       {/* Container for the list of connections */}
       <ListConnections chats={props.chats} />
-
+      </div>
       {/* Container for the text input */}
       
         {/* Text input component for entering new messages */}
