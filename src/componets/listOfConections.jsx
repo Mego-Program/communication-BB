@@ -10,24 +10,19 @@ function ListConnections({ chats }) {
   };
 
   return (
-    <Grid
-      container
-      maxHeight={"10vh"}
-      justifyContent="flex-start"
-      style={{ position: "fixed", bottom: 643, left: 30, right: 0 }}
-      elevation={3}
-    >
+    
       <div id={"list of connections"} style={{ overflowY: "auto" }}>
         {/* List of connections with avatars and names */}
         <List
         sx={{
-          width: "100%",
-          maxWidth: "100%",
+          width: "14%",
+          
           bgcolor: "#21213E",
-          color: "#FFFFFF",
-          overflow: 'auto',
-          position: 'relative',
-          maxHeight: 900
+          color: "#F6C927",
+          overflowY: 'auto',
+          position: 'fixed',
+          height: "100vh"
+          
         }}>
           {chats.map(function renderChatItem(chat) {
             return (
@@ -60,7 +55,7 @@ function ListConnections({ chats }) {
           })}
         </List>
       </div>
-    </Grid>
+    
   );
 }
 

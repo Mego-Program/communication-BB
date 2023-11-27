@@ -13,6 +13,7 @@ import {
   TextField,
   Button,
   Grid,
+  Stack,
   
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send"; // Import the Send icon
@@ -59,28 +60,18 @@ function ChatList(props) {
   // JSX structure for rendering the chat list component
   return (
     <div className="ChatContainer">
-      {/* Container for chat entries with flex layout */}
-      <div>
-      <ChatEntries chatHistory={chatHistory} />
+    {/* Container for chat entries with flex layout */}
 
-      {/* Container for the list of connections */}
-      <ListConnections chats={props.chats} />
-      </div>
-      {/* Container for the text input */}
-      
-        {/* Text input component for entering new messages */}
-        <TextInput newMessage={newMessage} handleChange={handleChange} />
-      
+    <ListConnections chats={props.chats} />
 
-      {/* Container for the send button */}
-    
-        {/* Send button component with the SendIcon */}
-        <ButtonSend handleSend={handleSend} />
-     
-    </div>
-  );
+    <ChatEntries chatHistory={chatHistory} />
+
+    {/* Text input component for entering new messages */}
+    <TextInput newMessage={newMessage} handleChange={handleChange} />
+
+    {/* Send button component with the SendIcon */}
+    <ButtonSend handleSend={handleSend} />
+  </div>
+);
 }
-
-// Export the ChatList component
 export default ChatList;
-

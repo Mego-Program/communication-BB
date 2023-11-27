@@ -6,7 +6,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 1);
-  
+  max-height:'100vh';
   background-color: rgba(18, 18, 49, 1);
   
 
@@ -18,4 +18,11 @@
 }
 ::-webkit-scrollbar {
   display: none; /* הסתרת הסרגל בדפדפני WebKit (כולל Chrome ו־Safari) */
+}
+.last-message {
+  color: white; /* Set the text color to white */
+}
+
+.ChatContainer {
+  /* Add any other styles you need for the ChatContainer */
 }
