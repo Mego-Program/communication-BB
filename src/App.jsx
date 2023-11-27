@@ -64,7 +64,7 @@ function App() {
   ];
 
   return (
-    <div >
+    <div   >
       
         <ChatList chats={chats} />
       

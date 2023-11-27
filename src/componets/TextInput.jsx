@@ -35,7 +35,7 @@ export default function TextInput(props){
           maxRows={4}
           value={props.newMessage}
           onChange={props.handleChange}
-          style={{ width: "1200px", backgroundColor: "white" }}
-          sx={{ position: "fixed", bottom: 0, left: 255, right: 0 }}
+          style={{ width: "75%", backgroundColor: "#F6C927" }}
+          sx={{ position: "fixed", bottom: 0, left: '15%', right: 0 }}
           elevation={3}
         /></Grid>)}
