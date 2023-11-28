@@ -1,7 +1,7 @@
 import React from 'react';
-import TextInput from './TextInput';
-import ButtonSend from './ButtunSend';
-import ChatList from './ChatList';
+import TextInput from '../../vite-project/src/componets/TextInput';
+import ButtonSend from '../../vite-project/src/componets/ButtunSend';
+import ChatList from '../../vite-project/src/componets/ChatList';
 
 
 function ChatPage({ chat }) {
