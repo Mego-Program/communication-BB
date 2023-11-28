@@ -1,67 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import UserProfile from "./componets/AvatarProfile";
-import ChatList from './componets/ChatList';
-import ListUsers from './componets/ListOfConections';
-import ChatsInformation from './componets/ChatsInformation'; // Update the path accordingly
+import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+// import UserProfile from "./components/AvatarProfile"; // Corrected import path
+import ChatList from "./ChatList";
+// import ListUsers from "./components/ListOfConnections"; // Corrected import path
+import ChatPage from "./ChatPage";
 
-
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#F6C927',
-    },
-    background: { default: '#0A0A1B' },
-  },
-});
+const usersList = [
+  { id: 1, name: 'danielsamuel', avatar: '/avatars/john.jpg', lastMessage: 'Hello there!', state: false },
+  { id: 2, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false },
+  // Add more chat items as needed
+];
 
 const App = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Your asynchronous operations to set isLoaded
+  }, []);
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#F6C927",
+      },
+      background: { default: "#0A0A1B" },
+    },
+  });
+
   return (
     <ThemeProvider theme={theme}>
-      <Routes>
-        {!isLoaded ? (
-          <Route path="/*" element={<CircularColor />} />
-        ) : (
+      <Router>
+        <Routes>
           <>
-            <Route path="/" element={<ChatsInformation />} />
-            <Route path="/UserProfile" element={<UserProfile />} />
-            <Route path="/ChatList" element={<ChatList />} />
-            <Route path="/ListUsers" element={<ListUsers />} />
-            <Route path="/register" element={<SignUp />} />
+            <Route path="/" element={<ChatList users={usersList} />} />
+            {/* <Route path="/ChatPage" element={<ChatPage chats={users} />} /> */}
+            {/* <Route path="/ListUsers" element={<ListUsers />} /> */}
           </>
-        )}
-      </Routes>
+        </Routes>
+      </Router>
     </ThemeProvider>
   );
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import React, { useState, useEffect } from 'react';
 // import UserProfile from "./componets/AvatarProfile";
@@ -107,18 +89,15 @@ export default App;
 //   )
 // }
 
-
-
 // function App() {
-  
+
 //     // Add more chat items as needed
-  
 
 //   return (
 //     <div   >
-      
+
 //         <ChatList chats={chats} />
-      
+
 //     </div>
 //   );
 // }
