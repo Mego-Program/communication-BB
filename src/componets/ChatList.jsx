@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import TextInput from "./TextInput";
-import ListConnections from "./listOfConections";
+import ListConnections from "./ListOfConections";
 import ButtonSend from "./ButtunSend";
 import { amber, orange, yellow } from '@mui/material/colors';
 import AvatarProfile from "./AvatarProfile";
-import ChatEntries from "./chathistory";
+import ChatEntries from "./Chathistory";
 import {
   List,
   ListItem,
