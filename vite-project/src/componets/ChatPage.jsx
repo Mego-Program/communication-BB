@@ -1,44 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import TextInput from './TextInput';
+import ButtonSend from './ButtunSend';
+import ChatList from './ChatList';
 
-function ChatPage() {
-  const { user_id } = useParams();
-  const [userData, setUserData] = useState(null);
 
-  // Simulate data fetching or API call based on the user_id
-  useEffect(() => {
-    // Assuming you have a function to fetch user data by ID
-    const fetchUserData = async () => {
-      try {
-        // Make an API call or fetch data based on the user_id
-        const response = await fetch(`/api/users/${user_id}`);
-        const data = await response.json();
-
-        // Update the state with the fetched user data
-        setUserData(data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    // Call the function to fetch user data
-    fetchUserData();
-  }, [user_id]);
-
+function ChatPage({ chat }) {
+    const chats = [
+        { id: 1, name: 'danielsamuel', avatar: '/avatars/john.jpg', lastMessage: 'Hello there!' ,state: false},
+        { id: 2, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 3, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 4, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 5, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 6, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 7, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 8, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 9, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 10, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 11, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 12, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 13, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 14, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 15, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        { id: 16, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false},
+        
+        
+      ];
   return (
     <div>
-      <h2>Chat Page for User {user_id}</h2>
+      <h2>{chat.name}'s Chat</h2>
+      
 
-      {userData ? (
-        <div>
-          <p>User Name: {userData.name}</p>
-          {/* Display other user-specific information */}
-        </div>
-      ) : (
-        <p>Loading user data...</p>
-      )}
 
-      {/* Add your chat page content here */}
+
+      <ChatList chats={chats}></ChatList>
+      {/* <TextInput/>
+      <ButtonSend/> */}
+
+
+      
     </div>
   );
 }
