@@ -7,7 +7,7 @@ function ChatList(props) {
   // JSX structure for rendering the chat list component
   return (
     <div className="ChatContainer">
-      <ListConnections users={props.usersList} />
+      <ListConnections users={props.users} />
     </div>
   );
 }
