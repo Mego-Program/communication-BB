@@ -1,42 +1,65 @@
-import React from "react";
+import { useEffect } from "react";
+import React, { useState } from "react";
 import ListConnections from "./componets/ListOfConections"; // Corrected import path
-import React, { useState } from 'react';
-
+import axios from "axios";
+import createTheme from "@mui/material/styles/createTheme";
 // Functional component for rendering the chat list
-function ChatList() {
+function ChatList(props) {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [usersList, setUserList] = useState("");
 
-  const [success, setSuccess] = useState('')
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        const response = await axios.get(
+          `http://localhost:5000/api/users/users`,
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+        setUserList(response.data.result);
+        console.log(usersList);
+        // Convert JSON string to JavaScript array
+        // const usersArray = JSON.parse(JSON.stringify(usersList));
 
-  const handleSubmit = async (event) => {
-    // event.preventDefault();
-    // const data = {
-    //   firstName: firstName,
-    // };
-
-    try {
-      const response = await axios.post('http://localhost:5000/api/users/allUsers');
-      setSuccess(response.data.message)
-      setErrors('')
-      setTimeout(() => {
-        //navigateTo('/');;
-      }, 1000);
-    } catch (error) {
-      if (error.response && error.response.data && error.response.data.errors) {
-
-        setErrors(error.response.data.errors.join(', '));
-        setSuccess('');
-      } else {
-        console.error('Undetected error', error.message);
+        setIsLoaded(true);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
-    }
+    };
+
+    fetchData();
+  }, []);
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#F6C927",
+      },
+      background: { default: "#0A0A1B" },
+    },
+  });
+
+  if (!isLoaded) {
+    return <p>Loading...</p>;
   }
 
-  // JSX structure for rendering the chat list component
   return (
-    <div className="ChatContainer">
-      <ListConnections users={success.users} />
+    <div>
+      <ListConnections users={usersList} />
+      {/* Add the rest of your JSX components here */}
     </div>
   );
-};
+}
+
+// JSX structure for rendering the chat list component
+// return (
+//   <div className="ChatContainer">
+//     <ListConnections users={usersList} />
+//   </div>
+// );
 
 export default ChatList;

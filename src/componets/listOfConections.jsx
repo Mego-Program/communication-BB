@@ -4,7 +4,7 @@ import { amber } from "@mui/material/colors";
 
 function ListConnections({ users }) {
   const [selectedUserId, setSelectedUserId] = useState(null);
-
+ console.log(users)
   const handleUserClick = (userId) => {
     setSelectedUserId(userId);
   };
@@ -37,7 +37,7 @@ function ListConnections({ users }) {
                   selectedUserId === user.id ? amber[100] : "transparent",
               }}
             >
-              <Avatar alt={user.name} src={user.avatar} />
+              <Avatar alt={user.firstName} src={user.lastName} />
               <div
                 style={{
                   marginLeft: "8px",
@@ -46,7 +46,7 @@ function ListConnections({ users }) {
                 }}
               >
                 <ListItemText
-                  primary={user.name}
+                  primary={user.lastName}
                   secondary={user.lastMessage}
                 />
               </div>
