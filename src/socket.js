@@ -1,11 +1,13 @@
-
+import io from "socket.io-client";
 
 const socket = io();
 
-   // Example: Send a message to the server
-   socket.emit('message', 'Hello, server!');
+// Example: Send a message to the server
+socket.emit("message", "Hello, server!");
 
-   // Example: Receive a message from the server
-   socket.on('message', (data) => {
-     console.log(`Received message: ${data.text} from user ${data.user}`);
-   });
+// Example: Receive a message from the server
+socket.on("message", (data) => {
+  console.log(`Received message: ${data.text} from user ${data.user}`);
+});
+
+export default socket;

@@ -5,6 +5,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import ChatList from "./ChatList";
 // import ListUsers from "./components/ListOfConnections"; // Corrected import path
 import ChatPage from "./ChatPage";
+import socket from "./socket";
 
 const usersList = [
   { id: 1, name: 'danielsamuel', avatar: '/avatars/john.jpg', lastMessage: 'Hello there!', state: false },
@@ -14,6 +15,8 @@ const usersList = [
 
 const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const a = socket;
 
   useEffect(() => {
     // Your asynchronous operations to set isLoaded
