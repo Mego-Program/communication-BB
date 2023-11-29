@@ -30,14 +30,15 @@ function ChatPage({ user }) {
       } else {
         console.error('Undetected error', error.message);
       }
-
-      return (
-        <div>
-          <h2>{props.name}'s Chat</h2>
-          <ChatList props={success}></ChatList>
-        </div>
-      );
     }
+  }
+  return (
+    <div>
+      <h2>{props.name}'s Chat</h2>
+      <ChatList props={success}></ChatList>
+    </div>
+  );
+}
 
-    export default ChatPage;
+export default ChatPage;
 
