@@ -7,12 +7,6 @@ import ChatList from "./ChatList";
 import ChatPage from "./ChatPage";
 import socket from "./socket";
 
-const usersList = [
-  { id: 1, name: 'danielsamuel', avatar: '/avatars/john.jpg', lastMessage: 'Hello there!', state: false },
-  { id: 2, name: 'Daniel Waisman', avatar: '/avatars/jane.jpg', lastMessage: 'How are you?', state: false },
-  // Add more chat items as needed
-];
-
 const App = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -36,8 +30,9 @@ const App = () => {
       <Router>
         <Routes>
           <>
-            <Route path="/" element={<ChatList users={usersList} />} />
-            {/* <Route path="/ChatPage" element={<ChatPage chats={users} />} /> */}
+            <Route path="/" element={<ChatList />} />
+            <Route path="/chatPage" element={<ChatPage />} />
+
             {/* <Route path="/ListUsers" element={<ListUsers />} /> */}
           </>
         </Routes>
