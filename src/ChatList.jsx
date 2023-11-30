@@ -6,7 +6,7 @@ import createTheme from "@mui/material/styles/createTheme";
 // Functional component for rendering the chat list
 function ChatList(props) {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [usersList, setUserList] = useState("");
+  const [usersList, setUserList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
