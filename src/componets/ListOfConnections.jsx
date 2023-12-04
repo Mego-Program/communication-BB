@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+
 import { Grid, List, ListItem, Avatar, ListItemText } from "@mui/material";
 import { amber } from "@mui/material/colors";
 
-function ListConnections({ users }) {
+export default function ListConnections({ users }) {
   const [selectedUserId, setSelectedUserId] = useState(null);
   
- console.log(users)
+ 
   const handleUserClick = (userId) => {
     setSelectedUserId(userId);
   };
@@ -36,8 +37,14 @@ function ListConnections({ users }) {
                 marginBottom: "4px",
                 backgroundColor:
                   String(selectedUserId) === String(user._id) ? amber[100] : "transparent",
-              }}
+              
+              
+              
+                }}
+                
             >
+              
+
               <Avatar alt={user.firstName} src={user.lastName} />
               <div
                 style={{
@@ -59,4 +66,4 @@ function ListConnections({ users }) {
   );
 }
 
-export default ListConnections;
+ ListConnections;

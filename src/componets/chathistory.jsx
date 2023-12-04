@@ -24,7 +24,7 @@ function ChatEntries({ chatHistory }) {
                 color: "rgba(246, 201, 39, 1)",
                 display: "flex",
                 flexDirection: "column", // Set flex direction to column
-                marginLeft: "15%",
+                marginLeft: "18%",
                 marginBottom: "10px", // Adjusted margin between chat entries
               }}
             >

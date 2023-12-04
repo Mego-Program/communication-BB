@@ -1,10 +1,47 @@
-import { useEffect } from "react";
-import React, { useState } from "react";
-import ListConnections from "./componets/ListOfConections"; // Corrected import path
+import React, { useEffect, useState } from "react";
+import ListConnections from "./componets/ListOfConnections"; // Corrected import path
+import TextInput from "./componets/TextInput";
+import ButtonSend from "./componets/ButtunSend"
+import ChatEntries from "./componets/chathistory";
 import axios from "axios";
-import createTheme from "@mui/material/styles/createTheme";
-// Functional component for rendering the chat list
-function ChatList(props) {
+import { Outlet,Link } from "react-router-dom";
+
+function ChatList({ onUserClick }) {
+  const [newMessage, setNewMessage] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
+
+  // Function to handle sending a new message
+  function handleSend() {
+    // Check if the new message is not empty
+    if (newMessage.trim() !== "") {
+      // Get the current timestamp
+      const newTimestamp = new Date();
+      // Format the timestamp as a string
+      const formattedTimestamp = newTimestamp.toLocaleString();
+
+      // Update the chat history with the new message
+      setChatHistory((prevChatHistory) => [
+        ...prevChatHistory,
+        {
+          time: formattedTimestamp,
+          message: newMessage,
+          user: {
+            id: 1,
+            name: "Ariel Samuel",
+            avatar: "/avatars/current-user.jpg",
+          },
+        },
+      ]);
+
+      // Clear the input for a new message
+      setNewMessage("");
+    }
+  }
+
+  // Function to handle changes in the input field
+  function handleChange(e) {
+    setNewMessage(e.target.value);
+  }
   const [isLoaded, setIsLoaded] = useState(false);
   const [usersList, setUserList] = useState([]);
 
@@ -21,10 +58,6 @@ function ChatList(props) {
           }
         );
         setUserList(response.data.result);
-        console.log(usersList);
-        // Convert JSON string to JavaScript array
-        // const usersArray = JSON.parse(JSON.stringify(usersList));
-
         setIsLoaded(true);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -34,32 +67,25 @@ function ChatList(props) {
     fetchData();
   }, []);
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#F6C927",
-      },
-      background: { default: "#0A0A1B" },
-    },
-  });
-
   if (!isLoaded) {
     return <p>Loading...</p>;
   }
 
   return (
-    <div>
-      <ListConnections users={usersList} />
-      {/* Add the rest of your JSX components here */}
+<div >
+  
+    
+
+
+<ChatEntries chatHistory={chatHistory} />
+
+{/* Text input component for entering new messages */}
+<TextInput newMessage={newMessage} handleChange={handleChange} />
+
+{/* Send button component with the SendIcon */}
+<ButtonSend handleSend={handleSend} />
     </div>
   );
 }
-
-// JSX structure for rendering the chat list component
-// return (
-//   <div className="ChatContainer">
-//     <ListConnections users={usersList} />
-//   </div>
-// );
 
 export default ChatList;
