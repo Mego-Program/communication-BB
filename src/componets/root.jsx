@@ -37,16 +37,16 @@ export default function Root() {
     return (
       <>
         <div id="sidebar">
-          <h1>Chat box </h1>
+         
           <div>
             <form id="search-form" role="search">
-              <input
+              {/* <input
                 id="q"
                 aria-label="Search contacts"
                 placeholder="Search"
                 type="search"
                 name="q"
-              />
+              /> */}
               <div
                 id="search-spinner"
                 aria-hidden
@@ -62,14 +62,8 @@ export default function Root() {
             </form> */}
           </div>
           <nav>
-            <ul>
-              <li>
-              {/* <Link to=></Link> */}
-              <Link to="/ChatList"><ListConnections users={usersList} ></ListConnections></Link>
-              </li>
-             
-            </ul>
-          </nav>
+             <Link to="/ChatList"><ListConnections users={usersList} ></ListConnections></Link>
+         </nav>
         </div>
         <div id="detail">
         <Outlet />

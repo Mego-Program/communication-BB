@@ -5,6 +5,7 @@ import ButtonSend from "./componets/ButtunSend"
 import ChatEntries from "./componets/chathistory";
 import axios from "axios";
 import { Outlet,Link } from "react-router-dom";
+import MyAppBar from "./componets/MyAppBar";
 
 function ChatList({ onUserClick }) {
   const [newMessage, setNewMessage] = useState("");
@@ -74,7 +75,7 @@ function ChatList({ onUserClick }) {
   return (
 <div >
   
-    
+<MyAppBar></MyAppBar>
 
 
 <ChatEntries chatHistory={chatHistory} />
@@ -84,6 +85,7 @@ function ChatList({ onUserClick }) {
 
 {/* Send button component with the SendIcon */}
 <ButtonSend handleSend={handleSend} />
+
     </div>
   );
 }
