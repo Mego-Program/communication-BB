@@ -14,10 +14,10 @@ export async function getContacts(query) {
 
 
 
-export async function getContact(id) {
-  await fakeNetwork(`contact:${id}`);
+export async function getContact(_id) {
+  await fakeNetwork(`contact:${_id}`);
   let contacts = await localforage.getItem("contacts");
-  let contact = contacts.find(contact => contact.id === id);
+  let contact = contacts.find(contact => contact._id === _id);
   return contact ?? null;
 }
 
