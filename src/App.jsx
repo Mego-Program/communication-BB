@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import ChatList from "./ChatList";
-import ChatPage from "./componets/contact";
-import socket from "./socket";
+
 import Root from "./componets/root";
 
 const App = () => {

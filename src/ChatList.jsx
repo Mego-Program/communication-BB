@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import ListConnections from "./componets/ListOfConnections"; // Corrected import path
 import TextInput from "./componets/TextInput";
@@ -27,8 +28,8 @@ function ChatList({ onUserClick }) {
           time: formattedTimestamp,
           message: newMessage,
           user: {
-            id: usersList._id,
-            name:"daniel wisman",
+            _id: usersList._id,
+            name:usersList.firstName + " "  + usersList.lastName,
             avatar: "/avatars/current-user.jpg",
           },
         },
