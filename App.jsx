@@ -1,11 +1,11 @@
 import io from "socket.io-client";
 import React, { useEffect, useState } from "react";
 
-const socket = io.connect("http://localhost:5000");
+// const socket = io.connect("http://localhost:5000");
 
 function App() {
   // this state is save input value
-  const [input, setInput] = useState("");
+  // const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -19,14 +19,14 @@ function App() {
     };
   }, []);
 
-  function sendMessage() {
-    // if haave a message that send message to server
-    if (input) {
-      socket.emit("message", input);
-    }
-    // this is for clear input value
-    setInput("");
-  }
+  // function sendMessage() {
+  //   // if haave a message that send message to server
+  //   if (input) {
+  //     socket.emit("message", input);
+  //   }
+  //   // this is for clear input value
+  //   setInput("");
+  // }
 
   return (
     <div>

@@ -1,42 +1,46 @@
-
 import React, { useEffect, useState } from "react";
 import ListConnections from "./componets/ListOfConnections"; // Corrected import path
 import TextInput from "./componets/TextInput";
-import ButtonSend from "./componets/ButtunSend"
+import ButtonSend from "./componets/ButtunSend";
 import ChatEntries from "./componets/chathistory";
 import axios from "axios";
-import { Outlet,Link } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import MyAppBar from "./componets/MyAppBar";
+import { io } from "socket.io-client";
+
+const socket = io.connect("http://localhost:5015");
 
 function ChatList({ onUserClick }) {
   const [newMessage, setNewMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
 
-  // Function to handle sending a new message
-  function handleSend() {
-    // Check if the new message is not empty
-    if (newMessage.trim() !== "") {
-      // Get the current timestamp
-      const newTimestamp = new Date();
-      // Format the timestamp as a string
-      const formattedTimestamp = newTimestamp.toLocaleString();
-
-      // Update the chat history with the new message
+  useEffect(() => {
+    const newTimestamp = new Date(); // Get the current timestamp
+    const formattedTimestamp = newTimestamp.toLocaleString(); // Format the timestamp as a string
+    // get message from server
+    socket.on("message", (message) => {
+      console.log(message);
       setChatHistory((prevChatHistory) => [
         ...prevChatHistory,
         {
           time: formattedTimestamp,
-          message: newMessage,
+          message: message,
           user: {
             _id: usersList._id,
-            name:usersList.firstName + " "  + usersList.lastName,
+            name: usersList.firstName + " " + usersList.lastName,
             avatar: "/avatars/current-user.jpg",
           },
         },
       ]);
+    });
+  }, []);
 
-      // Clear the input for a new message
-      setNewMessage("");
+  // Function to handle sending a new message
+  function handleSend() {
+    // Check if the new message is not empty
+    if (newMessage.trim() !== "") {
+      socket.emit("message", newMessage); // Send the new message to the server
+      setNewMessage(""); // Clear the input for a new message
     }
   }
 
@@ -44,6 +48,7 @@ function ChatList({ onUserClick }) {
   function handleChange(e) {
     setNewMessage(e.target.value);
   }
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [usersList, setUserList] = useState([]);
 
@@ -74,19 +79,16 @@ function ChatList({ onUserClick }) {
   }
 
   return (
-<div >
-  
-<MyAppBar></MyAppBar>
+    <div>
+      <MyAppBar></MyAppBar>
 
+      <ChatEntries chatHistory={chatHistory} />
 
-<ChatEntries chatHistory={chatHistory} />
+      {/* Text input component for entering new messages */}
+      <TextInput newMessage={newMessage} handleChange={handleChange} />
 
-{/* Text input component for entering new messages */}
-<TextInput newMessage={newMessage} handleChange={handleChange} />
-
-{/* Send button component with the SendIcon */}
-<ButtonSend handleSend={handleSend} />
-
+      {/* Send button component with the SendIcon */}
+      <ButtonSend handleSend={handleSend} />
     </div>
   );
 }
