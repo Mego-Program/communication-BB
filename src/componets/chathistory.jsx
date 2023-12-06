@@ -25,7 +25,8 @@ function ChatEntries({ chatHistory }) {
                 display: "flex",
                 flexDirection: "column", // Set flex direction to column
                 marginLeft: "18%",
-                marginBottom: "10px", // Adjusted margin between chat entries
+                marginTop: "5%"
+                 // Adjusted margin between chat entries
               }}
             >
               {/* Display user avatar and profile */}

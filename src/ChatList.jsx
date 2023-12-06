@@ -27,8 +27,8 @@ function ChatList({ onUserClick }) {
           time: formattedTimestamp,
           message: newMessage,
           user: {
-            id: 1,
-            name: "Ariel Samuel",
+            id: usersList._id,
+            name:"daniel wisman",
             avatar: "/avatars/current-user.jpg",
           },
         },
