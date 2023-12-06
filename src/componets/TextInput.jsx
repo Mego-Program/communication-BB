@@ -36,6 +36,6 @@ export default function TextInput(props){
           value={props.newMessage}
           onChange={props.handleChange}
           style={{ width: "75%", backgroundColor: "#F6C927" }}
-          sx={{ position: "fixed", bottom: 0, left: '15%', right: 0 }}
+          sx={{ position: "fixed", bottom: 0, left: '17%', right: 0 }}
           elevation={3}
         /></Grid>)}

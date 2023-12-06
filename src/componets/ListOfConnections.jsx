@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+
 import { Grid, List, ListItem, Avatar, ListItemText } from "@mui/material";
 import { amber } from "@mui/material/colors";
 
-function ListConnections({ users }) {
+export default function ListConnections({ users }) {
   const [selectedUserId, setSelectedUserId] = useState(null);
-
+  
+ 
   const handleUserClick = (userId) => {
     setSelectedUserId(userId);
   };
@@ -26,18 +28,24 @@ function ListConnections({ users }) {
         {users.map(function renderChatItem(user) {
           return (
             <ListItem
-              key={user.id}
+              key={user._id}
               button
-              onClick={() => handleUserClick(user.id)}
+              onClick={() => handleUserClick(user._id)}
               sx={{
                 border: `1px ${amber[400]} solid`,
                 borderRadius: "8px",
                 marginBottom: "4px",
                 backgroundColor:
-                  selectedUserId === user.id ? amber[100] : "transparent",
-              }}
+                  String(selectedUserId) === String(user._id) ? amber[100] : "transparent",
+              
+              
+              
+                }}
+                
             >
-              <Avatar alt={user.name} src={user.avatar} />
+              
+
+              <Avatar alt={user.firstName} src={user.lastName} />
               <div
                 style={{
                   marginLeft: "8px",
@@ -46,7 +54,7 @@ function ListConnections({ users }) {
                 }}
               >
                 <ListItemText
-                  primary={user.name}
+                  primary={user.firstName +" "+ user.lastName}
                   secondary={user.lastMessage}
                 />
               </div>
@@ -58,4 +66,4 @@ function ListConnections({ users }) {
   );
 }
 
-export default ListConnections;
+ ListConnections;

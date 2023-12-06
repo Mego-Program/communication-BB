@@ -4,7 +4,7 @@ import AvatarProfile from "./AvatarProfile";
 
 function ChatEntries({ chatHistory }) {
   return (
-    <div> 
+    <div style={{marginTop: "3.8%"}}> 
       {/* Map through chat history and render each chat entry */}
       {chatHistory.map(function renderMessage(entry, index) {
         const { message, user, time } = entry;
@@ -15,7 +15,7 @@ function ChatEntries({ chatHistory }) {
         // Return JSX for each chat entry
         return (
           // Apply a 'Grow' transition effect to the chat entry
-          <Grow key={index} in={true} timeout={1200}>
+          <Grow key={index} in={true} timeout={1200} >
             <div
               style={{
                 width: "fit-content",
@@ -24,8 +24,10 @@ function ChatEntries({ chatHistory }) {
                 color: "rgba(246, 201, 39, 1)",
                 display: "flex",
                 flexDirection: "column", // Set flex direction to column
-                marginLeft: "15%",
-                marginBottom: "10px", // Adjusted margin between chat entries
+                marginLeft: "18%",
+                marginTop: "1%"
+                
+                 // Adjusted margin between chat entries
               }}
             >
               {/* Display user avatar and profile */}
