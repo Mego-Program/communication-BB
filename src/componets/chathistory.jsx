@@ -4,7 +4,7 @@ import AvatarProfile from "./AvatarProfile";
 
 function ChatEntries({ chatHistory }) {
   return (
-    <div style={{marginTop: "3.8%"}}> 
+    <div style={{marginTop: "4.5%"}}> 
       {/* Map through chat history and render each chat entry */}
       {chatHistory.map(function renderMessage(entry, index) {
         const { message, user, time } = entry;
