@@ -7,7 +7,7 @@ import axios from "axios";
 import { Outlet, Link } from "react-router-dom";
 import MyAppBar from "./componets/MyAppBar";
 import { io } from "socket.io-client";
-import { infraApi, api } from "../App";
+import { infraApi, api } from "./App";
 
 
 const socket = io.connect(api);
