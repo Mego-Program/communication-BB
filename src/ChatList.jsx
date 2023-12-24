@@ -7,9 +7,10 @@ import axios from "axios";
 import { Outlet, Link } from "react-router-dom";
 import MyAppBar from "./componets/MyAppBar";
 import { io } from "socket.io-client";
-import { infraApi } from "../App";
+import { infraApi, api } from "./App";
 
-const socket = io.connect("https://communication-db.vercel.app");
+
+const socket = io.connect(api);
 
 function ChatList({ onUserClick }) {
   const [newMessage, setNewMessage] = useState("");
