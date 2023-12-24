@@ -9,7 +9,7 @@ import MyAppBar from "./componets/MyAppBar";
 import { io } from "socket.io-client";
 import { infraApi } from "../App";
 
-const socket = io.connect("http://localhost:5001");
+const socket = io.connect("https://communication-db.vercel.app");
 
 function ChatList({ onUserClick }) {
   const [newMessage, setNewMessage] = useState("");
