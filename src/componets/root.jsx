@@ -14,7 +14,7 @@ export default function Root() {
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(
-          `http://localhost:5000/api/users/users`,
+          `http://localhost:5000/api/users/list`,
           {
             headers: {
               authorization: token,

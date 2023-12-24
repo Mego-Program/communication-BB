@@ -2,8 +2,10 @@ import io from "socket.io-client";
 import React, { useEffect, useState } from "react";
 
 // const socket = io.connect("http://localhost:5000");
+export const infraApi = import.meta.env.VITE_INFRA_API
 
 function App() {
+ 
   // this state is save input value
   // const [input, setInput] = useState("");
   const [messages, setMessages] = useState([]);

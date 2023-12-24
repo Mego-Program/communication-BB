@@ -7,6 +7,7 @@ import axios from "axios";
 import { Outlet, Link } from "react-router-dom";
 import MyAppBar from "./componets/MyAppBar";
 import { io } from "socket.io-client";
+import { infraApi } from "../App";
 
 const socket = io.connect("http://localhost:5001");
 
@@ -15,13 +16,23 @@ function ChatList({ onUserClick }) {
   const [chatHistory, setChatHistory] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [usersList, setUserList] = useState([]);
-  
+  const [user,setUser] = useState('');
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("authToken");
+        console.log(token)
+
         const response = await axios.get(
-          `http://localhost:5000/api/users/users`,
+          `${infraApi}/api/users/list`,
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+        const user = await axios.get(
+          `${infraApi}/api/users/me`,
           {
             headers: {
               authorization: token,
@@ -29,6 +40,8 @@ function ChatList({ onUserClick }) {
           }
         );
         setUserList(response.data.result);
+        console.log('user: ', user.data.result[0]);
+        setUser(user.data.result[0])
         setIsLoaded(true);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -40,6 +53,8 @@ function ChatList({ onUserClick }) {
   useEffect(() => {
     const newTimestamp = new Date(); // Get the current timestamp
     const formattedTimestamp = newTimestamp.toLocaleString(); // Format the timestamp as a string
+   
+    
     // get message from server
     socket.on("message", (message) => {
       console.log(message);
@@ -49,9 +64,9 @@ function ChatList({ onUserClick }) {
           time: formattedTimestamp,
           message: message,
           user: {
-            id: usersList._id,
-            name: usersList.firstName,
-            avatar: usersList.length > 0 ? usersList[0].lastName : ""
+            id: 2,
+            name: user.firstName + " " + user.lastName,//here i want to put the name of the token
+            avatar: user.lastName
           },
         },
       ]);
