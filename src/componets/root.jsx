@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
-import LicstConnections from "./ListOfConnections";
+import ListConnections from "./ListOfConnections";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import TextInput from '../componets/TextInput'
