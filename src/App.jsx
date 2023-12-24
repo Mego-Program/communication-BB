@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import Root from "./componets/root";
 
 const App = () => {
