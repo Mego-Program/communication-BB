@@ -74,7 +74,7 @@ function ChatList({ onUserClick }) {
     return () => {
       socket.off("message");
     };
-  }, [usersList]);
+  }, [usersList]); 
    
   
 
