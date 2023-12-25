@@ -8,6 +8,7 @@ export default function ListConnections({ users }) {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const navigte = useNavigate();
+  
 
   const handleUserClick = (user) => {
     setSelectedUser(user);
