@@ -101,7 +101,7 @@ function ChatList({ onUserClick }) {
 
   return (
     <div>
-      <MyAppBar></MyAppBar>
+      
 
       <ChatEntries chatHistory={chatHistory} />
 

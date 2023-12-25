@@ -1,14 +1,20 @@
 import React, { useState } from "react";
-
 import { Grid, List, ListItem, Avatar, ListItemText } from "@mui/material";
 import { amber } from "@mui/material/colors";
+import MyAppBar from './MyAppBar'; // Import the MyAppBar component
+import { useNavigate } from "react-router-dom";
 
 export default function ListConnections({ users }) {
-  const [selectedUserId, setSelectedUserId] = useState(null);
-  
- 
-  const handleUserClick = (userId) => {
-    setSelectedUserId(userId);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const navigte = useNavigate();
+
+  const handleUserClick = (user) => {
+    setSelectedUser(user);
+  };
+
+  const handleNavigate = () => {
+    navigte("/message")
   };
 
   return (
@@ -17,7 +23,6 @@ export default function ListConnections({ users }) {
       <List
         sx={{
           width: "14%",
-
           bgcolor: "#21213E",
           color: "#F6C927",
           overflowY: "auto",
@@ -30,21 +35,15 @@ export default function ListConnections({ users }) {
             <ListItem
               key={user._id}
               button
-              onClick={() => handleUserClick(user._id)}
+              onClick={() => handleUserClick(user)}
               sx={{
                 border: `1px ${amber[400]} solid`,
                 borderRadius: "8px",
                 marginBottom: "4px",
                 backgroundColor:
-                  String(selectedUserId) === String(user._id) ? amber[100] : "transparent",
-              
-              
-              
-                }}
-                
+                  selectedUser && selectedUser._id === user._id ? amber[100] : "transparent",
+              }}
             >
-              
-
               <Avatar alt={user.firstName} src={user.lastName} />
               <div
                 style={{
@@ -54,7 +53,7 @@ export default function ListConnections({ users }) {
                 }}
               >
                 <ListItemText
-                  primary={user.firstName +" "+ user.lastName}
+                  primary={user.firstName + " " + user.lastName}
                   secondary={user.lastMessage}
                 />
               </div>
@@ -62,8 +61,16 @@ export default function ListConnections({ users }) {
           );
         })}
       </List>
+
+      {/* Pass the selected user's name to the MyAppBar component */}
+      
+      {selectedUser ? (
+       <MyAppBar contactName={`${selectedUser.firstName} ${selectedUser.lastName}`}  />
+      ) : (
+        
+        handleNavigate()
+      )};
+
     </div>
   );
 }
-
- ListConnections;
