@@ -11,7 +11,7 @@ import "./src/App.css"
 import ChatList from './src/ChatList.jsx'
 
 const router = createBrowserRouter([{
-path: 'message/',
+path: 'messages/',
 element: <App/>,
 children: [
   {

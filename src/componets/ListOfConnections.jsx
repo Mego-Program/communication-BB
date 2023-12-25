@@ -14,7 +14,7 @@ export default function ListConnections({ users }) {
   };
 
   const handleNavigate = () => {
-    navigte("/message")
+    navigte("/messages")
   };
 
   return (
