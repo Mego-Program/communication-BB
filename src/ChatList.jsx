@@ -9,6 +9,7 @@ import MyAppBar from "./componets/MyAppBar";
 import { io } from "socket.io-client";
 import { infraApi, api } from "./App";
 
+
 const socket = io.connect(api);
 
 function ChatList({ onUserClick }) {
@@ -36,9 +37,9 @@ function ChatList({ onUserClick }) {
           {
             headers: {
               authorization: token,
-            },
+            }, 
           }
-        );
+        ); 
         setUserList(response.data.result);
         console.log('user: ', user.data.result[0]);
         setUser(user.data.result[0])
@@ -74,7 +75,7 @@ function ChatList({ onUserClick }) {
     return () => {
       socket.off("message");
     };
-  }, [usersList]);
+  }, [usersList]); 
    
   
 
@@ -101,7 +102,7 @@ function ChatList({ onUserClick }) {
 
   return (
     <div>
-      <MyAppBar></MyAppBar>
+      
 
       <ChatEntries chatHistory={chatHistory} />
 
@@ -114,4 +115,4 @@ function ChatList({ onUserClick }) {
   );
 }
 
-export default ChatList;
+export default ChatList;
