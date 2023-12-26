@@ -82,11 +82,26 @@ function ChatList({ id }) {
 
   console.log(usersList.firstName)
   // Function to handle sending a new message
-  function handleSend() {
-    // Check if the new message is not empty
+  async function handleSend() {
     if (newMessage.trim() !== "") {
-      socket.emit("message", newMessage); // Send the new message to the server
-      setNewMessage(""); // Clear the input for a new message
+      // Perform a POST request to http://localhost:5001
+      try {
+        const response = await axios.post("http://localhost:5001", {
+          text: newMessage,
+          userId: userId,
+          selectedUserId: user._id
+        });
+
+        console.log("Message sent to server:", response.data);
+      } catch (error) {
+        console.error("Error sending message to server:", error);
+      }
+
+      // Emit the new message to the socket server
+      socket.emit("message", newMessage);
+
+      // Clear the input for a new message
+      setNewMessage("");
     }
   }
 
