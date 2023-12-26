@@ -4,14 +4,16 @@ import TextInput from "./componets/TextInput";
 import ButtonSend from "./componets/ButtunSend";
 import ChatEntries from "./componets/chathistory";
 import axios from "axios";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useParams } from "react-router-dom";
 import MyAppBar from "./componets/MyAppBar";
 import { io } from "socket.io-client";
-import { infraApi } from "../App";
+import {infraApi} from "../src/App"
+
 
 const socket = io.connect("http://localhost:5001");
 
-function ChatList({ onUserClick }) {
+function ChatList({ id }) {
+  const userId = useParams()
   const [newMessage, setNewMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -36,9 +38,9 @@ function ChatList({ onUserClick }) {
           {
             headers: {
               authorization: token,
-            },
+            }, 
           }
-        );
+        ); 
         setUserList(response.data.result);
         console.log('user: ', user.data.result[0]);
         setUser(user.data.result[0])
@@ -110,6 +112,8 @@ function ChatList({ onUserClick }) {
 
       {/* Send button component with the SendIcon */}
       <ButtonSend handleSend={handleSend} />
+
+
     </div>
   );
 }

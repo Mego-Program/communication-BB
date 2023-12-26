@@ -62,7 +62,8 @@ export default function Root() {
             </form> */}
           </div>
           <nav>
-             <Link to="ChatList"><ListConnections users={usersList} ></ListConnections></Link>
+             <ListConnections users={usersList} ></ListConnections>
+             {/* ${selectedUser} */}
          </nav>
         </div>
         <div id="detail">

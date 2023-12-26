@@ -18,8 +18,9 @@ children: [
 
   },
   {
-    path: 'ChatList/',
+    path: 'ChatList/:userId',
     element: <ChatList/>,
+    //
   }
 ]
 

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import Root from "./componets/root";
+
+export const infraApi = import.meta.env.VITE_INFRA_API
+export const api = import.meta.env.VITE_MESSEGE_API
 
 const App = () => {
   const [selectedUserId, setSelectedUserId] = useState(null);
