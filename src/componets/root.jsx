@@ -3,7 +3,6 @@ import ListConnections from "./ListOfConnections";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import TextInput from '../componets/TextInput'
-import { infraApi } from "../App"
 
 
 export default function Root() {
@@ -15,7 +14,7 @@ export default function Root() {
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.get(
-          `${infraApi}/api/users/list`,
+          `http://localhost:5000/api/users/list`,
           {
             headers: {
               authorization: token,
