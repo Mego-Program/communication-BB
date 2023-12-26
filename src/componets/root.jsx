@@ -63,7 +63,7 @@ export default function Root() {
             </form> */}
           </div>
           <nav>
-             <Link to="/ChatList"><ListConnections users={usersList} ></ListConnections></Link>
+             <Link to="ChatList"><ListConnections users={usersList} ></ListConnections></Link>
          </nav>
         </div>
         <div id="detail">
