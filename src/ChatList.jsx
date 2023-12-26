@@ -9,7 +9,6 @@ import MyAppBar from "./componets/MyAppBar";
 import { io } from "socket.io-client";
 import { infraApi, api } from "./App";
 
-
 const socket = io.connect(api);
 
 function ChatList({ onUserClick }) {
@@ -58,7 +57,7 @@ function ChatList({ onUserClick }) {
     
     // get message from server
     socket.on("message", (message) => {
-      console.log(message);
+      console.log("message: ", message);
       setChatHistory((prevChatHistory) => [
         ...prevChatHistory,
         {
@@ -85,7 +84,7 @@ function ChatList({ onUserClick }) {
     // Check if the new message is not empty
     if (newMessage.trim() !== "") {
       socket.emit("message", newMessage); // Send the new message to the server
-      setNewMessage(""); // Clear the input for a new message
+      setNewMessage(''); // Clear the input for a new message
     }
   }
 
@@ -115,4 +114,4 @@ function ChatList({ onUserClick }) {
   );
 }
 
-export default ChatList;
+export default ChatList;
