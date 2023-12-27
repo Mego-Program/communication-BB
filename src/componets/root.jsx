@@ -2,7 +2,7 @@ import { Outlet, Link } from "react-router-dom";
 import ListConnections from "./ListOfConnections";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import TextInput from '../componets/TextInput'
+
 import { infraApi } from "../App";
 
 
@@ -37,39 +37,10 @@ export default function Root() {
   }
     return (
       <>
-        <div id="sidebar">
-         
-          <div>
-            <form id="search-form" role="search">
-              {/* <input
-                id="q"
-                aria-label="Search contacts"
-                placeholder="Search"
-                type="search"
-                name="q"
-              /> */}
-              <div
-                id="search-spinner"
-                aria-hidden
-                hidden={true}
-              />
-              <div
-                className="sr-only"
-                aria-live="polite"
-              ></div>
-            </form>
-            {/* <form method="post">
-              <button type="submit">New</button>
-            </form> */}
-          </div>
           <nav>
              <ListConnections users={usersList} ></ListConnections>
-             {/* ${selectedUser} */}
          </nav>
-        </div>
-        <div id="detail">
         <Outlet />
-        </div>
       </>
     );
   }

@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
-import ListConnections from "./componets/ListOfConnections"; // Corrected import path
 import TextInput from "./componets/TextInput";
 import ButtonSend from "./componets/ButtunSend";
 import ChatEntries from "./componets/chathistory";
 import axios from "axios";
 import { Outlet, Link, useParams } from "react-router-dom";
-import MyAppBar from "./componets/MyAppBar";
 import { io } from "socket.io-client";
 import {infraApi} from "../src/App"
 
 
 const socket = io.connect("http://localhost:5001");
 
-function ChatList({ id }) {
+function ChatList({  }) {
   const userId = useParams()
   const [newMessage, setNewMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);

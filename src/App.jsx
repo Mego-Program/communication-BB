@@ -6,12 +6,7 @@ export const infraApi = import.meta.env.VITE_INFRA_API
 export const api = import.meta.env.VITE_MESSEGE_API
 
 const App = () => {
-  const [selectedUserId, setSelectedUserId] = useState(null);
-
-  const handleUserClick = (userId) => {
-    setSelectedUserId(userId);
-  };
-
+  
   useEffect(() => {
     // Your asynchronous operations to set isLoaded
   }, []);
