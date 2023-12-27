@@ -3,7 +3,7 @@ import TextInput from "./componets/TextInput";
 import ButtonSend from "./componets/ButtunSend";
 import ChatEntries from "./componets/chathistory";
 import axios from "axios";
-import { Outlet, Link, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import {infraApi} from "../src/App"
 
