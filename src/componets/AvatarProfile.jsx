@@ -1,18 +1,7 @@
 import React from "react"
 
-import {
-    List,
-    ListItem,
-    ListItemText,
-    Avatar,
-    TextField,
-    Button,
-    Grid,
-    Grow,
-    colors,
-    Stack,
-  } from "@mui/material";
-  import SendIcon from "@mui/icons-material/Send"
+import {Avatar} from "@mui/material";
+  
 
 export default function AvatarProfile(props){
     return (

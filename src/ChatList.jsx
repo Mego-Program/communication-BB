@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import ListConnections from "./componets/ListOfConnections"; // Corrected import path
+
 import TextInput from "./componets/TextInput";
 import ButtonSend from "./componets/ButtunSend";
-import ChatEntries from "./componets/chathistory";
+import ChatEntries from "./componets/ChatEntries";
 import axios from "axios";
-import { Outlet, Link } from "react-router-dom";
-import MyAppBar from "./componets/MyAppBar";
+import {  useParams } from "react-router-dom";
+
 import { io } from "socket.io-client";
 import { infraApi, api } from "./App";
 
 
+
 const socket = io.connect(api);
 
-function ChatList({ onUserClick }) {
+function ChatList({ id }) {
+  const userId = useParams()
   const [newMessage, setNewMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -58,7 +60,7 @@ function ChatList({ onUserClick }) {
     
     // get message from server
     socket.on("message", (message) => {
-      console.log("message: ", message);
+      console.log(message);
       setChatHistory((prevChatHistory) => [
         ...prevChatHistory,
         {
@@ -81,11 +83,26 @@ function ChatList({ onUserClick }) {
 
   console.log(usersList.firstName)
   // Function to handle sending a new message
-  function handleSend() {
-    // Check if the new message is not empty
+  async function handleSend() {
     if (newMessage.trim() !== "") {
-      socket.emit("message", newMessage); // Send the new message to the server
-      setNewMessage(''); // Clear the input for a new message
+      // Perform a POST request to http://localhost:5001
+      try {
+        const response = await axios.post(api, {
+          text: newMessage,
+          userId: userId,
+          selectedUserId: user._id
+        });
+
+        console.log("Message sent to server:", response.data);
+      } catch (error) {
+        console.error("Error sending message to server:", error);
+      }
+
+      // Emit the new message to the socket server
+      socket.emit("message", newMessage);
+
+      // Clear the input for a new message
+      setNewMessage("");
     }
   }
 
@@ -111,6 +128,8 @@ function ChatList({ onUserClick }) {
 
       {/* Send button component with the SendIcon */}
       <ButtonSend handleSend={handleSend} />
+
+
     </div>
   );
 }
