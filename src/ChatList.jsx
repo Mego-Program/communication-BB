@@ -7,10 +7,11 @@ import axios from "axios";
 import {  useParams } from "react-router-dom";
 
 import { io } from "socket.io-client";
-import {infraApi} from "../src/App"
+import { infraApi, api } from "./App";
 
 
-const socket = io.connect("http://localhost:5001");
+
+const socket = io.connect(api);
 
 function ChatList({ id }) {
   const userId = useParams()
@@ -86,7 +87,7 @@ function ChatList({ id }) {
     if (newMessage.trim() !== "") {
       // Perform a POST request to http://localhost:5001
       try {
-        const response = await axios.post("http://localhost:5001", {
+        const response = await axios.post(api, {
           text: newMessage,
           userId: userId,
           selectedUserId: user._id
