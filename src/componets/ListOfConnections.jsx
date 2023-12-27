@@ -5,7 +5,7 @@ import MyAppBar from './MyAppBar'; // Import the MyAppBar component
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 
 
 export default function ListConnections({ users }) {
