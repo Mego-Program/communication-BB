@@ -4,8 +4,11 @@ import { amber } from "@mui/material/colors";
 import MyAppBar from './MyAppBar'; // Import the MyAppBar component
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import axios from "axios";
+import { infraApi } from "../App";
+
 export default function ListConnections({ users }) {
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUser, setSelectedUser] = useState('');
   const [user_me,setUser_me] = useState("");
   const navigte = useNavigate();
   

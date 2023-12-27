@@ -6,7 +6,7 @@ export const infraApi = import.meta.env.VITE_INFRA_API
 export const api = import.meta.env.VITE_MESSEGE_API
 
 const App = () => {
-  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUserId, setSelectedUserId] = useState('');
 
   const handleUserClick = (userId) => {
     setSelectedUserId(userId);
@@ -27,7 +27,7 @@ const App = () => {
 
   return (
     //<ChatList onUserClick={handleUserClick}  />
-    <Root></Root>
+    <Root />
   );
 };
 
