@@ -11,7 +11,7 @@ export default defineConfig({
       name: "message_app",
       filename: "remoteEntry.js",
       exposes: {
-        './App': './src/App.jsx'
+        './App': './src/Router.jsx'
       },
       shared: ['react','react-dom']
     })
