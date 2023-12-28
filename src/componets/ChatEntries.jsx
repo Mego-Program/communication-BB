@@ -1,17 +1,53 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Grow } from "@mui/material";
 import AvatarProfile from "./AvatarProfile";
 import { useParams } from "react-router-dom";
-import axios from "axios"; // Import axios if not already imported
+import axios from "axios";
+import { infraApi } from "../App";
+
 
 function ChatEntries({ chatHistory }) {
   const { userId } = useParams();
+  const [user,setUser] = useState('');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        console.log(token)
+
+        
+        const user = await axios.get(
+          `${infraApi}/api/users/me`,
+          {
+            headers: {
+              authorization: token,
+            }, 
+          }
+        ); 
+       
+        console.log('user: ', user.data.result[0]);
+        setUser(user.data.result[0])
+        
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        if(!user._id ||!userId){
+          return
+      }
         // Perform a GET request to http://localhost:5001
-        const response = await axios.get("http://localhost:5001");
+        const response = await axios.get(`http://localhost:5001/chat/${user._id}/${userId}`);
         if (response.status !== 200) {
           throw new Error("Failed to fetch data from http://localhost:5001");
         }
@@ -30,7 +66,7 @@ function ChatEntries({ chatHistory }) {
     };
 
     fetchData();
-  }, [userId]); // Add dependencies if needed
+  }, [user._id,userId]); // Add dependencies if needed
 
 
   return (
