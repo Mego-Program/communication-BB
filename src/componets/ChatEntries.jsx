@@ -1,10 +1,50 @@
-import React from "react";
-import { Grow, Stack } from "@mui/material";
+import React, { useEffect } from "react";
+import { Grow } from "@mui/material";
 import AvatarProfile from "./AvatarProfile";
+import { useParams } from "react-router-dom";
+import axios from "axios"; // Import axios if not already imported
 
 function ChatEntries({ chatHistory }) {
+  const { userId } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Replace 'newMessage' with the actual message you want to send
+        const newMessage = "Your message content here";
+
+        // Perform a POST request to http://localhost:5001
+        const response = await axios.post("http://localhost:5001", {
+          text: newMessage,
+          userId: userId,
+          selectedUserId: user._id, // You need to define 'user' before using it
+        });
+
+        console.log("Message sent to server:", response.data);
+      } catch (error) {
+        console.error("Error sending message to server:", error);
+      }
+
+      // Emit the new message to the socket server (assuming 'socket' is defined)
+      socket.emit("message", newMessage);
+
+      // Clear the input for a new message (You may need to define a function to clear the input)
+    };
+
+    fetchData();
+  }, [userId]); // Add dependencies if needed
+
+
   return (
     <div style={{marginTop: "4.5%"}}> 
+   
+    
+
+
+
+
+
+
       {/* Map through chat history and render each chat entry */}
       {chatHistory.map(function renderMessage(entry, index) {
         const { message, user, time } = entry;
