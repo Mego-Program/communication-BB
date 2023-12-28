@@ -71,7 +71,7 @@ function ChatList() {
     if (newMessage.trim() !== "") {
       // Perform a POST request to http://localhost:5001
       try {
-        const urlSent = `${api}/send/`;
+        const urlSent = `${api}/send`;
         console.log(urlSent);
         const response = await axios.post(urlSent, {
           text: newMessage,
