@@ -13,7 +13,7 @@ children: [
   },
   
   {
-    path: 'ChatList/',
+    path: 'ChatList/*',
     element: <ChatList/>,
   }
 ]
