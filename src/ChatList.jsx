@@ -86,10 +86,10 @@ function ChatList({ id }) {
     if (newMessage.trim() !== "") {
       // Perform a POST request to http://localhost:5001
       try {
-        const response = await axios.post("http://localhost:5001", {
+        const response = await axios.post(`http://localhost:5001/chat/${user._id}/${userId}`, {
           text: newMessage,
-          userId: userId,
-          selectedUserId: user._id
+          local_user: user._id,
+          selectedUserId: userId
         });
 
         console.log("Message sent to server:", response.data);
