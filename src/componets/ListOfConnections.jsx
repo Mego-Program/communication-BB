@@ -5,8 +5,8 @@ import MyAppBar from './MyAppBar'; // Import the MyAppBar component
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-
-
+import axios from "axios";
+import { infraApi } from "../App";
 
 export default function ListConnections({ users }) {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -58,7 +58,7 @@ export default function ListConnections({ users }) {
         console.log('Fetched user token data:', user_token.data);
   
         setUser_me(user_token.data.result[0]);
-        setIsLoaded(true);
+        
       } catch (error) {
         console.error("Error fetching data:", error);
       }
