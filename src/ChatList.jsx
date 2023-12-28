@@ -1,63 +1,50 @@
-import React, { useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
 import TextInput from "./componets/TextInput";
 import ButtonSend from "./componets/ButtunSend";
 import ChatEntries from "./componets/ChatEntries";
 import axios from "axios";
-import {  useParams } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import { infraApi, api } from "./App";
 
-
-
 const socket = io.connect(api);
 
-function ChatList({ id }) {
-  const userId = useParams()
+function ChatList() {
+  const userId = useParams();
   const [newMessage, setNewMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [usersList, setUserList] = useState([]);
-  const [user,setUser] = useState('');
+  const [user, setUser] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        console.log(token)
+        console.log(token);
 
-        const response = await axios.get(
-          `${infraApi}/api/users/list`,
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        );
-        const user = await axios.get(
-          `${infraApi}/api/users/me`,
-          {
-            headers: {
-              authorization: token,
-            }, 
-          }
-        ); 
+        const response = await axios.get(`${infraApi}/api/users/list`, {
+          headers: {
+            authorization: token,
+          },
+        });
+        const user = await axios.get(`${infraApi}/api/users/me`, {
+          headers: {
+            authorization: token,
+          },
+        });
         setUserList(response.data.result);
-        console.log('user: ', user.data.result[0]);
-        setUser(user.data.result[0])
+        console.log("user: ", user.data.result[0]);
+        setUser(user.data.result[0]);
         setIsLoaded(true);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
   useEffect(() => {
     const newTimestamp = new Date(); // Get the current timestamp
     const formattedTimestamp = newTimestamp.toLocaleString(); // Format the timestamp as a string
-   
-    
     // get message from server
     socket.on("message", (message) => {
       console.log(message);
@@ -68,8 +55,8 @@ function ChatList({ id }) {
           message: message,
           user: {
             id: 2,
-            name: user.firstName + " " + user.lastName,//here i want to put the name of the token
-            avatar: user.lastName
+            name: user.firstName + " " + user.lastName, //here i want to put the name of the token
+            avatar: user.lastName,
           },
         },
       ]);
@@ -77,23 +64,20 @@ function ChatList({ id }) {
     return () => {
       socket.off("message");
     };
-  }, [usersList]); 
-   
-  
+  }, [usersList]);
 
-  console.log(usersList.firstName)
   // Function to handle sending a new message
   async function handleSend() {
     if (newMessage.trim() !== "") {
       // Perform a POST request to http://localhost:5001
       try {
-
-        const response = await axios.post(`${api}/chat/${user._id}/${userId}`, {
+        const urlSent = `${api}/send/`;
+        console.log(urlSent);
+        const response = await axios.post(urlSent, {
           text: newMessage,
           local_user: user._id,
-          selectedUserId: userId
+          selectedUserId: userId,
         });
-
         console.log("Message sent to server:", response.data);
       } catch (error) {
         console.error("Error sending message to server:", error);
@@ -111,26 +95,16 @@ function ChatList({ id }) {
   function handleChange(e) {
     setNewMessage(e.target.value);
   }
-
-
-
   if (!isLoaded) {
     return <p>Loading...</p>;
   }
-
   return (
     <div>
-      
-
       <ChatEntries chatHistory={chatHistory} />
-
       {/* Text input component for entering new messages */}
       <TextInput newMessage={newMessage} handleChange={handleChange} />
-
       {/* Send button component with the SendIcon */}
       <ButtonSend handleSend={handleSend} />
-
-
     </div>
   );
 }

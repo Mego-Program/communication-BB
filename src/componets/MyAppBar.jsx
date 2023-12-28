@@ -1,4 +1,3 @@
-import React from 'react';
 import { AppBar, Toolbar, Typography, Avatar } from '@mui/material';
 
 function MyAppBar({ contactName }) {

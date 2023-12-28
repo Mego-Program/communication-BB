@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {  List, ListItem, Avatar, ListItemText } from "@mui/material";
 import { amber } from "@mui/material/colors";
 import MyAppBar from './MyAppBar'; // Import the MyAppBar component
@@ -8,28 +8,10 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { infraApi } from "../App";
 
-
-
-
 export default function ListConnections({ users }) {
   const [selectedUser, setSelectedUser] = useState(null);
   const [userId, setUserId] = useState(null);
-  const [user_me, setUser_me] = useState("");
   const navigate = useNavigate();
-
-  const saveMessageToDatabase = async (userId, selectedUserId) => {
-    try {
-      const response = await axios.post('/api/saveMessage', {
-        userId,
-        selectedUserId,
-      });
-
-      // Handle the response if needed
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error sending data:', error);
-    }
-  };
 
   const handleUserClick = (user) => {
     setSelectedUser(user);
@@ -58,10 +40,7 @@ export default function ListConnections({ users }) {
         );
   
         console.log('Fetched user data:', response.data);
-        console.log('Fetched user token data:', user_token.data);
-  
-        setUser_me(user_token.data.result[0]);
-        
+        console.log('Fetched user token data:', user_token.data);    
       } catch (error) {
         console.error("Error fetching data:", error);
       }

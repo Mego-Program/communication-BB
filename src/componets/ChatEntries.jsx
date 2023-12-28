@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { infraApi } from "../App";
 
-
 function ChatEntries({ chatHistory }) {
   const { userId } = useParams();
   const [user,setUser] = useState('');
@@ -14,8 +13,6 @@ function ChatEntries({ chatHistory }) {
       try {
         const token = localStorage.getItem("authToken");
         console.log(token)
-
-        
         const user = await axios.get(
           `${infraApi}/api/users/me`,
           {
@@ -24,10 +21,8 @@ function ChatEntries({ chatHistory }) {
             }, 
           }
         ); 
-       
         console.log('user: ', user.data.result[0]);
         setUser(user.data.result[0])
-        
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -36,10 +31,6 @@ function ChatEntries({ chatHistory }) {
     fetchData();
   }, []);
 
-
-
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,13 +38,12 @@ function ChatEntries({ chatHistory }) {
           return
       }
         // Perform a GET request to http://localhost:5001
+        // TODO: use the correct URL in env file
         const response = await axios.get(`http://localhost:5001/chat/${user._id}/${userId}`);
         if (response.status !== 200) {
           throw new Error("Failed to fetch data from http://localhost:5001");
         }
-
         console.log("Data fetched from server:", response.data);
-
         // Assuming you have a socket instance, emit the new message to the socket server
         // Replace 'socket' with your actual socket instance
         // Replace 'newMessage' with the actual message you want to emit
@@ -67,7 +57,6 @@ function ChatEntries({ chatHistory }) {
 
     fetchData();
   }, [user._id,userId]); // Add dependencies if needed
-
 
   return (
     <div style={{marginTop: "4.5%"}}> 
