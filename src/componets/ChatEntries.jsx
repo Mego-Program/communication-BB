@@ -1,8 +1,74 @@
-import React from "react";
-import { Grow, Stack } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Grow } from "@mui/material";
 import AvatarProfile from "./AvatarProfile";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { infraApi } from "../App";
+
 
 function ChatEntries({ chatHistory }) {
+  const { userId } = useParams();
+  const [user,setUser] = useState('');
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        console.log(token)
+
+        
+        const user = await axios.get(
+          `${infraApi}/api/users/me`,
+          {
+            headers: {
+              authorization: token,
+            }, 
+          }
+        ); 
+       
+        console.log('user: ', user.data.result[0]);
+        setUser(user.data.result[0])
+        
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if(!user._id ||!userId){
+          return
+      }
+        // Perform a GET request to http://localhost:5001
+        const response = await axios.get(`http://localhost:5001/chat/${user._id}/${userId}`);
+        if (response.status !== 200) {
+          throw new Error("Failed to fetch data from http://localhost:5001");
+        }
+
+        console.log("Data fetched from server:", response.data);
+
+        // Assuming you have a socket instance, emit the new message to the socket server
+        // Replace 'socket' with your actual socket instance
+        // Replace 'newMessage' with the actual message you want to emit
+        socket.emit("newMessage",newMessage);
+
+        // Clear the input for a new message (You may need to define a function to clear the input)
+      } catch (error) {
+        console.error("Error fetching data from server:", error);
+      }
+    };
+
+    fetchData();
+  }, [user._id,userId]); // Add dependencies if needed
+
+
   return (
     <div style={{marginTop: "4.5%"}}> 
       {/* Map through chat history and render each chat entry */}
