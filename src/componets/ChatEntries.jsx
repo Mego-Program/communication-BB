@@ -10,25 +10,23 @@ function ChatEntries({ chatHistory }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Replace 'newMessage' with the actual message you want to send
-        const newMessage = "Your message content here";
+        // Perform a GET request to http://localhost:5001
+        const response = await axios.get("http://localhost:5001");
+        if (response.status !== 200) {
+          throw new Error("Failed to fetch data from http://localhost:5001");
+        }
 
-        // Perform a POST request to http://localhost:5001
-        const response = await axios.post("http://localhost:5001", {
-          text: newMessage,
-          userId: userId,
-          selectedUserId: user._id, // You need to define 'user' before using it
-        });
+        console.log("Data fetched from server:", response.data);
 
-        console.log("Message sent to server:", response.data);
+        // Assuming you have a socket instance, emit the new message to the socket server
+        // Replace 'socket' with your actual socket instance
+        // Replace 'newMessage' with the actual message you want to emit
+        socket.emit("newMessage",newMessage);
+
+        // Clear the input for a new message (You may need to define a function to clear the input)
       } catch (error) {
-        console.error("Error sending message to server:", error);
+        console.error("Error fetching data from server:", error);
       }
-
-      // Emit the new message to the socket server (assuming 'socket' is defined)
-      socket.emit("message", newMessage);
-
-      // Clear the input for a new message (You may need to define a function to clear the input)
     };
 
     fetchData();
@@ -37,14 +35,6 @@ function ChatEntries({ chatHistory }) {
 
   return (
     <div style={{marginTop: "4.5%"}}> 
-   
-    
-
-
-
-
-
-
       {/* Map through chat history and render each chat entry */}
       {chatHistory.map(function renderMessage(entry, index) {
         const { message, user, time } = entry;
