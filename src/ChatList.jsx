@@ -16,6 +16,8 @@ function ChatList() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [usersList, setUserList] = useState([]);
   const [user, setUser] = useState("");
+  const [room, setRoom] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,11 +29,13 @@ function ChatList() {
             authorization: token,
           },
         });
+
         const user = await axios.get(`${infraApi}/api/users/me`, {
           headers: {
             authorization: token,
           },
         });
+
         setUserList(response.data.result);
         console.log("user: ", user.data.result[0]);
         setUser(user.data.result[0]);
@@ -42,16 +46,16 @@ function ChatList() {
     };
     fetchData();
   }, []);
+
   useEffect(() => {
-    const newTimestamp = new Date(); // Get the current timestamp
-    const formattedTimestamp = newTimestamp.toLocaleString(); // Format the timestamp as a string
+    const newTimestamp = new Date().toLocaleString(); // Get the current timestamp
     // get message from server
-    socket.on("message", (message) => {
+    socket.on("send", (message) => {
       console.log(message);
       setChatHistory((prevChatHistory) => [
         ...prevChatHistory,
         {
-          time: formattedTimestamp,
+          time: newTimestamp,
           message: message,
           user: {
             id: 2,
@@ -60,11 +64,12 @@ function ChatList() {
           },
         },
       ]);
+      console.log("jjjjjjj" + chatHistory);
     });
     return () => {
       socket.off("message");
     };
-  }, [usersList]);
+  }, []);
 
   // Function to handle sending a new message
   async function handleSend() {
@@ -72,7 +77,6 @@ function ChatList() {
       // Perform a POST request to http://localhost:5001
       try {
         const urlSent = `${api}/send`;
-        console.log(urlSent);
         const response = await axios.post(urlSent, {
           text: newMessage,
           local_user: user._id,
@@ -93,9 +97,11 @@ function ChatList() {
   function handleChange(e) {
     setNewMessage(e.target.value);
   }
+
   if (!isLoaded) {
     return <p>Loading...</p>;
   }
+
   return (
     <div>
       <ChatEntries chatHistory={chatHistory} />
