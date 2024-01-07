@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { infraApi } from "../App";
 
+// eslint-disable-next-line react/prop-types
 export default function ListConnections({ users }) {
   const [selectedUser, setSelectedUser] = useState(null);
   const [userId, setUserId] = useState(null);
@@ -56,11 +57,11 @@ export default function ListConnections({ users }) {
   }, [userId, selectedUser]);
 
 
-  const handleNavigate = () => {
-    if (selectedUser) {
-      navigate(`/messages/ChatList/${userId}`);
-    }
-  };
+  // const handleNavigate = () => {
+  //   if (selectedUser) {
+  //     navigate(`/messages/ChatList/${userId}`);
+  //   }
+  // };
 
   return (
     <div id={"list of connections"} style={{ overflowY: "auto" }}>

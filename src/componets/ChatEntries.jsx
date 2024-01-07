@@ -56,7 +56,7 @@ function ChatEntries({ chatHistory }) {
     };
 
     fetchData();
-  }, [user._id,userId]); // Add dependencies if needed
+  }, [user._id, userId]); // Add dependencies if needed
 
   return (
     <div style={{marginTop: "4.5%"}}> 

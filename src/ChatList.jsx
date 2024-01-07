@@ -14,30 +14,21 @@ function ChatList() {
   const [newMessage, setNewMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [usersList, setUserList] = useState([]);
   const [user, setUser] = useState("");
-  const [room, setRoom] = useState("");
+  const [room, setRoom] = useState([user._id, userId["*"]].sort().join("-"));
+
+  useEffect(() => {
+  }, [userId]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        console.log(token);
-
-        const response = await axios.get(`${infraApi}/api/users/list`, {
-          headers: {
-            authorization: token,
-          },
-        });
-
         const user = await axios.get(`${infraApi}/api/users/me`, {
           headers: {
             authorization: token,
           },
         });
-
-        setUserList(response.data.result);
-        console.log("user: ", user.data.result[0]);
         setUser(user.data.result[0]);
         setIsLoaded(true);
       } catch (error) {
@@ -46,6 +37,50 @@ function ChatList() {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData1 = async () => {
+      if (user._id && userId["*"]) {
+        setRoom([user._id, userId["*"]].sort().join("-"));
+
+        if (room !== "") {
+          console.log(room, userId);
+          socket.emit("join", room);
+        }
+        try {
+          const url = `http://localhost:5015/chat?sender=${user._id}&receiver=${userId["*"]}`;
+          console.log(user._id, userId["*"]);
+          const response = await axios.get(url);
+
+          // Assuming response.data is an array of past messages
+          const pastMessages = response.data;
+          console.log(
+            "🚀 ~ file: ChatList.jsx:51 ~ fetchData ~ pastMessages:",
+            pastMessages
+          );
+
+          // Update chat history with the received messages
+          setChatHistory([]);
+          setChatHistory((prevChatHistory) => [
+            ...prevChatHistory,
+            ...pastMessages.map((message) => ({
+              time: message.date, // Adjust property names based on the actual structure of the message object
+              message: message.content,
+              user: {
+                id: message._id,
+                name: message.getting, // Assuming 'getting' is the user's name in the message object
+                avatar: message.getting, // Assuming 'getting' is the user's avatar in the message object
+              },
+            })),
+          ]);
+        } catch (error) {
+          console.error("Error fetching past messages:", error);
+        }
+      }
+    };
+
+    fetchData1();
+  }, [userId]);
 
   useEffect(() => {
     const newTimestamp = new Date().toLocaleString(); // Get the current timestamp
@@ -64,10 +99,9 @@ function ChatList() {
           },
         },
       ]);
-      console.log("jjjjjjj" + chatHistory);
     });
     return () => {
-      socket.off("message");
+      socket.off("send");
     };
   }, []);
 
@@ -76,7 +110,7 @@ function ChatList() {
     if (newMessage.trim() !== "") {
       // Perform a POST request to http://localhost:5001
       try {
-        const urlSent = `${api}/send`;
+        const urlSent = `http://localhost:5015/send`; //TODO chenge the port
         const response = await axios.post(urlSent, {
           text: newMessage,
           local_user: user._id,
@@ -84,12 +118,10 @@ function ChatList() {
         });
         console.log("Message sent to server:", response.data);
       } catch (error) {
-        console.error("Error sending message to server:", error);
+        console.error("Error sending message to server:", error.message);
       }
-      // Emit the new message to the socket server
-      socket.emit("message", newMessage);
-      // Clear the input for a new message
-      setNewMessage("");
+      socket.emit("message", { room, newMessage }); // Emit the new message to the socket server
+      setNewMessage(""); // Clear the input for a new message
     }
   }
 
