@@ -1,32 +1,18 @@
-import React, { useState } from "react";
-import {  List, ListItem, Avatar, ListItemText } from "@mui/material";
+import { useState } from "react";
+import { List, ListItem, Avatar, ListItemText } from "@mui/material";
 import { amber } from "@mui/material/colors";
-import MyAppBar from './MyAppBar'; // Import the MyAppBar component
+import MyAppBar from "./MyAppBar"; // Import the MyAppBar component
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { infraApi } from "../App";
 
-
-
+// eslint-disable-next-line react/prop-types
 export default function ListConnections({ users }) {
   const [selectedUser, setSelectedUser] = useState(null);
   const [userId, setUserId] = useState(null);
-  const [user_me, setUser_me] = useState("");
   const navigate = useNavigate();
-
-  const saveMessageToDatabase = async (userId, selectedUserId) => {
-    try {
-      const response = await axios.post('/api/saveMessage', {
-        userId,
-        selectedUserId,
-      });
-
-      // Handle the response if needed
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error sending data:', error);
-    }
-  };
 
   const handleUserClick = (user) => {
     setSelectedUser(user);
@@ -37,33 +23,24 @@ export default function ListConnections({ users }) {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await axios.get(
-          `${infraApi}/api/users/list`,
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        );
-        const user_token = await axios.get(
-          `${infraApi}/api/users/me`,
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        );
-  
-        console.log('Fetched user data:', response.data);
-        console.log('Fetched user token data:', user_token.data);
-  
-        setUser_me(user_token.data.result[0]);
-        setIsLoaded(true);
+        const response = await axios.get(`${infraApi}/api/users/list`, {
+          headers: {
+            authorization: token,
+          },
+        });
+        const user_token = await axios.get(`${infraApi}/api/users/me`, {
+          headers: {
+            authorization: token,
+          },
+        });
+
+        console.log("Fetched user data:", response.data);
+        console.log("Fetched user token data:", user_token.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
+
     fetchData();
   }, []);
 
@@ -73,12 +50,11 @@ export default function ListConnections({ users }) {
     }
   }, [userId, selectedUser]);
 
-
-  const handleNavigate = () => {
-    if (selectedUser) {
-      navigate(`/messages/ChatList/${userId}`);
-    }
-  };
+  // const handleNavigate = () => {
+  //   if (selectedUser) {
+  //     navigate(`/messages/ChatList/${userId}`);
+  //   }
+  // };
 
   return (
     <div id={"list of connections"} style={{ overflowY: "auto" }}>
@@ -119,7 +95,7 @@ export default function ListConnections({ users }) {
               <ListItemText
                 primary={
                   <Link
-                    style={{ textDecoration: "none" ,color:"orange"}}
+                    style={{ textDecoration: "none", color: "#F6C927" }}
                     to={`ChatList/${user._id}`} // Use user._id directly
                   >
                     {user.firstName + " " + user.lastName}

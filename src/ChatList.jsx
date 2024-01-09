@@ -1,107 +1,129 @@
-import React, { useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
 import TextInput from "./componets/TextInput";
 import ButtonSend from "./componets/ButtunSend";
 import ChatEntries from "./componets/ChatEntries";
 import axios from "axios";
-import {  useParams } from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
-import {infraApi} from "../src/App"
+import { infraApi, api } from "./App";
 
+const socket = io.connect(api);
 
-const socket = io.connect("http://localhost:5001");
-
-function ChatList({ id }) {
-  const userId = useParams()
+function ChatList() {
+  const userId = useParams();
   const [newMessage, setNewMessage] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [usersList, setUserList] = useState([]);
-  const [user,setUser] = useState('');
+  const [user, setUser] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        console.log(token)
-
-        const response = await axios.get(
-          `${infraApi}/api/users/list`,
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        );
-        const user = await axios.get(
-          `${infraApi}/api/users/me`,
-          {
-            headers: {
-              authorization: token,
-            }, 
-          }
-        ); 
-        setUserList(response.data.result);
-        console.log('user: ', user.data.result[0]);
-        setUser(user.data.result[0])
+        const userMe = await axios.get(`${infraApi}/api/users/me`, {
+          headers: {
+            authorization: token,
+          },
+        });
+        setUser(userMe.data.result[0]);
         setIsLoaded(true);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
   }, []);
+
+  const newRoom = () => {
+    if (user._id && userId["*"]) {
+      return [user._id, userId["*"]].sort().join("-");
+    }
+  };
+
   useEffect(() => {
-    const newTimestamp = new Date(); // Get the current timestamp
-    const formattedTimestamp = newTimestamp.toLocaleString(); // Format the timestamp as a string
-   
-    
+    const fetchData1 = async () => {
+      if (user._id && userId["*"]) {
+        if (newRoom !== "") {
+          console.log(newRoom());
+          socket.emit("join", newRoom());
+        }
+        try {
+          const url = `http://localhost:5015/chat?sender=${user._id}&receiver=${userId["*"]}`;
+          const response = await axios.get(url);
+
+          // Assuming response.data is an array of past messages
+          const pastMessages = response.data;
+
+          // Update chat history with the received messages
+          setChatHistory([]);
+          setChatHistory((prevChatHistory) => [
+            ...prevChatHistory,
+            ...pastMessages.map((message) => ({
+              time: message.date, // Adjust property names based on the actual structure of the message object
+              message: message.content,
+              user: {
+                id: message._id,
+                name: message.getting, // Assuming 'getting' is the user's name in the message object
+                avatar: message.getting, // Assuming 'getting' is the user's avatar in the message object
+              },
+            })),
+          ]);
+        } catch (error) {
+          console.error("Error fetching past messages:", error);
+        }
+      }
+    };
+
+    fetchData1();
+    return () => {
+      socket.emit("leave", newRoom()  );
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    const newTimestamp = new Date().toLocaleString(); // Get the current timestamp
     // get message from server
-    socket.on("message", (message) => {
+    socket.on("send", (message) => {
       console.log(message);
       setChatHistory((prevChatHistory) => [
         ...prevChatHistory,
         {
-          time: formattedTimestamp,
+          time: newTimestamp,
           message: message,
           user: {
             id: 2,
-            name: user.firstName + " " + user.lastName,//here i want to put the name of the token
-            avatar: user.lastName
+            name: user.firstName + " " + user.lastName, //here i want to put the name of the token
+            avatar: user.lastName,
           },
         },
       ]);
     });
     return () => {
-      socket.off("message");
+      socket.off("send");
     };
-  }, [usersList]); 
-   
-  
+  }, []);
 
-  console.log(usersList.firstName)
   // Function to handle sending a new message
   async function handleSend() {
     if (newMessage.trim() !== "") {
+      const room = newRoom()
       // Perform a POST request to http://localhost:5001
       try {
-        const response = await axios.post("http://localhost:5001", {
+        const urlSent = `http://localhost:5015/send`; //TODO chenge the port
+        const response = await axios.post(urlSent, {
           text: newMessage,
-          userId: userId,
-          selectedUserId: user._id
+          firstName: user.firstName,
+          lastName: user.lastName,
+          userId: user._id,
+          selectedUserId: userId,
         });
-
+        // TODO: add new danial code
         console.log("Message sent to server:", response.data);
       } catch (error) {
-        console.error("Error sending message to server:", error);
+        console.error("Error sending message to server:", error.message);
       }
-
-      // Emit the new message to the socket server
-      socket.emit("message", newMessage);
-
-      // Clear the input for a new message
-      setNewMessage("");
+      socket.emit("message", { room, newMessage }); // Emit the new message to the socket server
+      setNewMessage(""); // Clear the input for a new message
     }
   }
 
@@ -110,25 +132,17 @@ function ChatList({ id }) {
     setNewMessage(e.target.value);
   }
 
-
-
   if (!isLoaded) {
     return <p>Loading...</p>;
   }
 
   return (
     <div>
-      
-
       <ChatEntries chatHistory={chatHistory} />
-
       {/* Text input component for entering new messages */}
       <TextInput newMessage={newMessage} handleChange={handleChange} />
-
       {/* Send button component with the SendIcon */}
       <ButtonSend handleSend={handleSend} />
-
-
     </div>
   );
 }

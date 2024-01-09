@@ -1,6 +1,6 @@
-import { Outlet, Link } from "react-router-dom";
-import ListConnections from "./ListOfConnections";
-import React, { useEffect, useState } from "react";
+import { Outlet} from "react-router-dom";
+import ListConnections from "./ListConnections";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { infraApi } from "../App";
