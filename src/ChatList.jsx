@@ -15,21 +15,17 @@ function ChatList() {
   const [chatHistory, setChatHistory] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [user, setUser] = useState("");
-  const [room, setRoom] = useState([user._id, userId["*"]].sort().join("-"));
-
-  useEffect(() => {
-  }, [userId]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const user = await axios.get(`${infraApi}/api/users/me`, {
+        const userMe = await axios.get(`${infraApi}/api/users/me`, {
           headers: {
             authorization: token,
           },
         });
-        setUser(user.data.result[0]);
+        setUser(userMe.data.result[0]);
         setIsLoaded(true);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -38,26 +34,25 @@ function ChatList() {
     fetchData();
   }, []);
 
+  const newRoom = () => {
+    if (user._id && userId["*"]) {
+      return [user._id, userId["*"]].sort().join("-");
+    }
+  };
+
   useEffect(() => {
     const fetchData1 = async () => {
       if (user._id && userId["*"]) {
-        setRoom([user._id, userId["*"]].sort().join("-"));
-
-        if (room !== "") {
-          console.log(room, userId);
-          socket.emit("join", room);
+        if (newRoom !== "") {
+          console.log(newRoom());
+          socket.emit("join", newRoom());
         }
         try {
           const url = `http://localhost:5015/chat?sender=${user._id}&receiver=${userId["*"]}`;
-          console.log(user._id, userId["*"]);
           const response = await axios.get(url);
 
           // Assuming response.data is an array of past messages
           const pastMessages = response.data;
-          console.log(
-            "🚀 ~ file: ChatList.jsx:51 ~ fetchData ~ pastMessages:",
-            pastMessages
-          );
 
           // Update chat history with the received messages
           setChatHistory([]);
@@ -80,6 +75,9 @@ function ChatList() {
     };
 
     fetchData1();
+    return () => {
+      socket.emit("leave", newRoom()  );
+    }
   }, [userId]);
 
   useEffect(() => {
@@ -108,14 +106,18 @@ function ChatList() {
   // Function to handle sending a new message
   async function handleSend() {
     if (newMessage.trim() !== "") {
+      const room = newRoom()
       // Perform a POST request to http://localhost:5001
       try {
         const urlSent = `http://localhost:5015/send`; //TODO chenge the port
         const response = await axios.post(urlSent, {
           text: newMessage,
-          local_user: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          userId: user._id,
           selectedUserId: userId,
         });
+        // TODO: add new danial code
         console.log("Message sent to server:", response.data);
       } catch (error) {
         console.error("Error sending message to server:", error.message);

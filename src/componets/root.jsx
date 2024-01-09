@@ -1,5 +1,5 @@
 import { Outlet} from "react-router-dom";
-import ListConnections from "./ListOfConnections";
+import ListConnections from "./ListConnections";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
